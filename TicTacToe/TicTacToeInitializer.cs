@@ -2,22 +2,8 @@
 
 namespace TicTacToe
 {
-    public class TicTacToe
+    internal class TicTacToeInitializer
     {
-        #region Constants
-
-        /// <summary>
-        /// Обозначение крестика.
-        /// </summary>
-        private static char symbolX = 'X';
-
-        /// <summary>
-        /// Обозначение нолика.
-        /// </summary>
-        private static char symbolO = 'O';
-
-        #endregion
-
         #region Fields and Properties
 
         /// <summary>
@@ -53,13 +39,13 @@ namespace TicTacToe
 
                 do
                 {
-                    Console.Write($"Ход {CheckXorO(currentPlayer)}: ");
+                    Console.Write($"Ход {Util.CheckXorO(currentPlayer)}: ");
                     inputValid = int.TryParse(Console.ReadLine(), out var choice) && choice >= 1 && choice <= 9 &&
-                                    board[choice - 1] != 'X' && board[choice - 1] != 'O';
+                                    board[choice - 1] != Util.symbolX && board[choice - 1] != Util.symbolO;
 
                     if (inputValid)
                     {
-                        board[choice - 1] = CheckXorO(currentPlayer);
+                        board[choice - 1] = Util.CheckXorO(currentPlayer);
                     }
                     else
                     {
@@ -71,7 +57,7 @@ namespace TicTacToe
                 {
                     Console.Clear();
                     DrawBoard();
-                    Console.WriteLine($"Игрок {CheckXorO(currentPlayer)} победил!");
+                    Console.WriteLine($"Игрок {Util.CheckXorO(currentPlayer)} победил!");
                     Stickman.StickmanJustJumping(currentPlayer);
                     StartNewGame();
                 }
@@ -89,14 +75,6 @@ namespace TicTacToe
         }
 
         /// <summary>
-        /// Проверка: текущий игрок X или O.
-        /// </summary>
-        /// <param name="currentPlayer">Текущий игрок.</param>
-        /// <returns></returns>
-        private static char CheckXorO(int currentPlayer)
-            => currentPlayer == 1 ? 'X' : 'O';
-
-        /// <summary>
         /// Отрисовка игрового поля.
         /// </summary>
         private static void DrawBoard()
@@ -105,12 +83,12 @@ namespace TicTacToe
             for (int i = 0; i < board.Length; i++)
             {
                 Console.Write("| ");
-                if (board[i] == 'X')
+                if (board[i] == Util.symbolX)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(board[i]);
                 }
-                else if (board[i] == 'O')
+                else if (board[i] == Util.symbolO)
                 {
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.Write(board[i]);
@@ -151,7 +129,7 @@ namespace TicTacToe
         {
             foreach (var cell in board)
             {
-                if (cell != 'X' && cell != 'O')
+                if (cell != Util.symbolX && cell != Util.symbolO)
                     return false;
             }
             return true;

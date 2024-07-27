@@ -40,7 +40,7 @@ namespace TicTacToe
         private static void DrawStickman(int position, int currentPlayer)
         {
             Console.SetCursorPosition(0, position);
-            Console.WriteLine($" {(currentPlayer == 1 ? 'X' : 'O')} ");
+            Console.WriteLine($" {Util.CheckXorO(currentPlayer)} ");
             Console.WriteLine("/|\\");
             Console.WriteLine("/ \\");
         }
@@ -53,7 +53,7 @@ namespace TicTacToe
         private static void DrawStickmanJump(int position, int currentPlayer)
         {
             Console.SetCursorPosition(0, position);
-            Console.WriteLine($"\\{(currentPlayer == 1 ? 'X' : 'O')}/");
+            Console.WriteLine($"\\{Util.CheckXorO(currentPlayer)}/");
             Console.WriteLine(" |");
             Console.WriteLine("/ \\");
         }
