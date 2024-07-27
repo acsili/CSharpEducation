@@ -21,6 +21,11 @@ namespace TicTacToe
         /// </summary>
         private static int currentPlayer;
 
+        /// <summary>
+        /// Игрок против компьютера.
+        /// </summary>
+        private static bool playerVsComputer;
+
         #endregion
 
         #region Methods
@@ -30,17 +35,27 @@ namespace TicTacToe
         /// </summary>
         public static void Start()
         {
+            StartNewGame();
             while (run)
             {
                 DrawBoard();
                 Console.WriteLine();
 
-                bool inputValid;
-
+                bool inputValid = true;
+                int choice;
                 do
                 {
                     Console.Write($"Ход {Util.CheckXorO(currentPlayer)}: ");
-                    inputValid = int.TryParse(Console.ReadLine(), out var choice) && choice >= 1 && choice <= 9 &&
+
+                    if (playerVsComputer && currentPlayer == 2)
+                    {
+                        choice = ComputerMove();
+                        board[choice - 1] = Util.CheckXorO(currentPlayer);
+                        Console.WriteLine(choice);
+                        break;
+                    }
+
+                    inputValid = int.TryParse(Console.ReadLine(), out choice) && choice >= 1 && choice <= 9 &&
                                     board[choice - 1] != Util.symbolX && board[choice - 1] != Util.symbolO;
 
                     if (inputValid)
@@ -51,6 +66,8 @@ namespace TicTacToe
                     {
                         Console.WriteLine("Неверный ход!\n");
                     }
+                    
+
                 } while (!inputValid);
 
                 if (ItIsWin())
@@ -149,7 +166,7 @@ namespace TicTacToe
                 {
                     board = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
                     currentPlayer = 1;
-
+                    PlayVsComputer();
                     Console.Clear();
                     break;
                 }
@@ -163,6 +180,48 @@ namespace TicTacToe
                     Console.WriteLine("Неверный ввод!");
                 }
             } while (true);
+        }
+
+        /// <summary>
+        /// Игра против компьютера.
+        /// </summary>
+        private static void PlayVsComputer()
+        {
+            string play;
+            do
+            {
+                Console.Write("Хотите сыграть против другого игрока? [y/n] ");
+                play = Console.ReadLine()!;
+                if (play == "y")
+                {
+                    playerVsComputer = false;
+                    break;
+                }
+                else if (play == "n")
+                {
+                    playerVsComputer = true;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Неверный ввод!");
+                }
+            } while (true);
+        }
+
+        /// <summary>
+        /// Ход компьютера.
+        /// </summary>
+        /// <returns></returns>
+        private static int ComputerMove()
+        {
+            Random rand = new Random();
+            int move;
+            do
+            {
+                move = rand.Next(1, 10);
+            } while (board[move] == Util.symbolX || board[move] == Util.symbolO);
+            return move;
         }
 
         #endregion
