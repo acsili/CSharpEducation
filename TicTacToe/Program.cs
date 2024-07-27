@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-public class TicTacToe
+public class Program
 {
 
     #region Fields and Properties
@@ -41,7 +41,7 @@ public class TicTacToe
             {
                 Console.Write($"Ход {(currentPlayer == 1 ? 'X' : 'O')}: ");
                 inputValid = int.TryParse(Console.ReadLine(), out var choice) && choice >= 1 && choice <= 9 && 
-                    board[choice - 1] != 'X' && board[choice - 1] != 'O';
+                                board[choice - 1] != 'X' && board[choice - 1] != 'O';
 
                 if (inputValid)
                 {
