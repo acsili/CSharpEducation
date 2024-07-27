@@ -3,6 +3,9 @@ using System.Threading;
 
 public class TicTacToe
 {
+
+    #region Fields and Properties
+
     /// <summary>
     /// Запуск игры. true - запуск бесконечного цикла, false - заверщение программы.
     /// </summary>
@@ -18,7 +21,13 @@ public class TicTacToe
     /// </summary>
     private static int currentPlayer = 1;
 
+    #endregion
 
+    #region Main
+
+    /// <summary>
+    /// Точка входа в программу.
+    /// </summary>
     static void Main()
     {
         while (run)
@@ -64,6 +73,10 @@ public class TicTacToe
             currentPlayer = (currentPlayer == 1) ? 2 : 1;
         }
     }
+
+    #endregion
+
+    #region Methods
 
     /// <summary>
     /// Отрисовка игрового поля.
@@ -213,6 +226,8 @@ public class TicTacToe
         Console.WriteLine("   ");
         Console.WriteLine("   ");
     }
+
+    #endregion
 
 }
 
