@@ -1,3 +1,3 @@
 ﻿using TicTacToe;
 
-TicTacToeInitializer.Start();
+TicTacToeGame.StartGame();

@@ -2,92 +2,107 @@
 
 namespace TicTacToe
 {
-    internal class TicTacToeInitializer
+    /// <summary>
+    /// Игра "Крестики-нолики"
+    /// </summary>
+    internal class TicTacToeGame
     {
+
+        #region Constants
+
+        /// <summary>
+        /// Обозначение крестика.
+        /// </summary>
+        private const char symbolX = 'X';
+
+        /// <summary>
+        /// Обозначение нолика.
+        /// </summary>
+        private const char symbolO = 'O';
+
+        #endregion
+
         #region Fields and Properties
 
         /// <summary>
-        /// Запуск игры. true - запуск бесконечного цикла, false - заверщение программы.
-        /// </summary>
-        private static bool run = true;
-
-        /// <summary>
-        /// Доска, заполненная стандартными значениями.
+        /// Доска.
         /// </summary>
         private static char[] board;
 
         /// <summary>
         /// Текущий игрок.
         /// </summary>
-        private static int currentPlayer;
+        private static char currentPlayer;
 
         /// <summary>
         /// Игрок против компьютера.
         /// </summary>
-        private static bool playerVsComputer;
-
+        private static bool isPlayingAgainstComputer;
+        
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Запуск цикла для начала игры.
+        /// Запуск игры.
         /// </summary>
-        public static void Start()
+        public static void StartGame()
         {
-            StartNewGame();
-            while (run)
+            InternalStartGame();
+            while (true)
             {
                 DrawBoard();
                 Console.WriteLine();
 
-                bool inputValid = true;
+                bool isInputValid;
                 int choice;
+
                 do
                 {
-                    Console.Write($"Ход {Util.CheckXorO(currentPlayer)}: ");
+                    Console.Write($"Ход {currentPlayer}: ");
 
-                    if (playerVsComputer && currentPlayer == 2)
+                    if (isPlayingAgainstComputer && currentPlayer == symbolO)
                     {
                         choice = ComputerMove();
-                        board[choice - 1] = Util.CheckXorO(currentPlayer);
+                        board[choice - 1] = currentPlayer;
                         Console.WriteLine(choice);
                         break;
                     }
 
-                    inputValid = int.TryParse(Console.ReadLine(), out choice) && choice >= 1 && choice <= 9 &&
-                                    board[choice - 1] != Util.symbolX && board[choice - 1] != Util.symbolO;
+                    isInputValid = int.TryParse(Console.ReadLine(), out choice) && 
+                                    choice >= 1 && choice <= 9 &&
+                                    board[choice - 1] != symbolX && 
+                                    board[choice - 1] != symbolO;
 
-                    if (inputValid)
+                    if (isInputValid)
                     {
-                        board[choice - 1] = Util.CheckXorO(currentPlayer);
+                        board[choice - 1] = currentPlayer;
                     }
                     else
                     {
                         Console.WriteLine("Неверный ход!\n");
                     }
                     
+                } while (!isInputValid);
 
-                } while (!inputValid);
-
-                if (ItIsWin())
+                if (CheckIsWin())
                 {
                     Console.Clear();
                     DrawBoard();
-                    Console.WriteLine($"Игрок {Util.CheckXorO(currentPlayer)} победил!");
-                    Stickman.StickmanJustJumping(currentPlayer);
-                    StartNewGame();
+                    Console.WriteLine($"Игрок {currentPlayer} победил!");
+                    StickmanAnimation.PlayAnimation(currentPlayer);
+                    InternalStartGame();
                 }
 
-                if (ItIsDraw())
+                if (CheckIsDraw())
                 {
                     Console.Clear();
                     DrawBoard();
                     Console.WriteLine("Ничья!");
-                    StartNewGame();
+                    InternalStartGame();
                 }
 
-                currentPlayer = (currentPlayer == 1) ? 2 : 1;
+                currentPlayer = (currentPlayer == symbolX) ? symbolO : symbolX;
             }
         }
 
@@ -100,12 +115,12 @@ namespace TicTacToe
             for (int i = 0; i < board.Length; i++)
             {
                 Console.Write("| ");
-                if (board[i] == Util.symbolX)
+                if (board[i] == symbolX)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(board[i]);
                 }
-                else if (board[i] == Util.symbolO)
+                else if (board[i] == symbolO)
                 {
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.Write(board[i]);
@@ -129,8 +144,8 @@ namespace TicTacToe
         /// <summary>
         /// Проверка на победу игрока. 
         /// </summary>
-        /// <returns></returns>
-        private static bool ItIsWin()
+        /// <returns>true - если один из игроков выиграл, иначе false.</returns>
+        private static bool CheckIsWin()
         {
             return (board[0] == board[1] && board[1] == board[2]) || (board[3] == board[4] && board[4] == board[5]) ||
                    (board[6] == board[7] && board[7] == board[8]) || (board[0] == board[3] && board[3] == board[6]) ||
@@ -141,21 +156,21 @@ namespace TicTacToe
         /// <summary>
         /// Проверка на ничью.
         /// </summary>
-        /// <returns></returns>
-        private static bool ItIsDraw()
+        /// <returns>true - если ничья, иначе false.</returns>
+        private static bool CheckIsDraw()
         {
             foreach (var cell in board)
             {
-                if (cell != Util.symbolX && cell != Util.symbolO)
+                if (cell != symbolX && cell != symbolO)
                     return false;
             }
             return true;
         }
 
         /// <summary>
-        /// Начать новую игру. y - новая игра, n - завершение программы.
+        /// Начать игру.
         /// </summary>
-        private static void StartNewGame()
+        private static void InternalStartGame()
         {
             string newGame;
             do
@@ -165,14 +180,14 @@ namespace TicTacToe
                 if (newGame == "y")
                 {
                     board = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-                    currentPlayer = 1;
-                    PlayVsComputer();
+                    currentPlayer = symbolX;
+                    isPlayingAgainstComputer = GetIsPlayingAgainstComputer();
                     Console.Clear();
                     break;
                 }
                 else if (newGame == "n")
                 {
-                    run = false;
+                    Environment.Exit(0);
                     break;
                 }
                 else
@@ -183,9 +198,10 @@ namespace TicTacToe
         }
 
         /// <summary>
-        /// Игра против компьютера.
+        /// Определение, хочет ли пользователь сыграть против компьютера.
         /// </summary>
-        private static void PlayVsComputer()
+        /// <returns>false — если пользователь выбрал играть против другого игрока, true — если пользователь выбрал играть против компьютера.</returns>
+        private static bool GetIsPlayingAgainstComputer()
         {
             string play;
             do
@@ -194,13 +210,11 @@ namespace TicTacToe
                 play = Console.ReadLine()!;
                 if (play == "y")
                 {
-                    playerVsComputer = false;
-                    break;
+                    return false;
                 }
                 else if (play == "n")
                 {
-                    playerVsComputer = true;
-                    break;
+                    return true;
                 }
                 else
                 {
@@ -212,16 +226,16 @@ namespace TicTacToe
         /// <summary>
         /// Ход компьютера.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Когда находится свободная позиция, возвращается значение от 1 до 9</returns>
         private static int ComputerMove()
         {
             Random rand = new Random();
             int move;
             do
             {
-                move = rand.Next(1, 10);
-            } while (board[move] == Util.symbolX || board[move] == Util.symbolO);
-            return move;
+                move = rand.Next(0, 9);
+            } while (board[move] == symbolX || board[move] == symbolO);
+            return move + 1;
         }
 
         #endregion

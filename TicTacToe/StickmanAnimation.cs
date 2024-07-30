@@ -3,7 +3,10 @@ using System.Threading;
 
 namespace TicTacToe
 {
-    public class Stickman
+    /// <summary>
+    /// Управление анимацией человечка.
+    /// </summary>
+    public class StickmanAnimation
     {
         #region Methods
 
@@ -11,7 +14,7 @@ namespace TicTacToe
         /// Анимация человечка после победы определенного игрока.
         /// </summary>
         /// <param name="currentPlayer">Победивший игрок.</param>
-        public static void StickmanJustJumping(int currentPlayer)
+        public static void PlayAnimation(char currentPlayer)
         {
             Console.CursorVisible = false;
             int groundLevel = Console.WindowHeight - 20;
@@ -33,10 +36,10 @@ namespace TicTacToe
         /// </summary>
         /// <param name="position">Положение человечка на консоли.</param>
         /// <param name="currentPlayer">Победивший игрок.</param>
-        private static void DrawStickman(int position, int currentPlayer)
+        private static void DrawStickman(int position, char currentPlayer)
         {
             Console.SetCursorPosition(0, position);
-            Console.WriteLine($" {Util.CheckXorO(currentPlayer)} ");
+            Console.WriteLine($" {currentPlayer} ");
             Console.WriteLine("/|\\");
             Console.WriteLine("/ \\");
         }
@@ -46,10 +49,10 @@ namespace TicTacToe
         /// </summary>
         /// <param name="position">Положение человечка на консоли.</param>
         /// <param name="currentPlayer">Победивший игрок.</param>
-        private static void DrawStickmanJump(int position, int currentPlayer)
+        private static void DrawStickmanJump(int position, char currentPlayer)
         {
             Console.SetCursorPosition(0, position);
-            Console.WriteLine($"\\{Util.CheckXorO(currentPlayer)}/");
+            Console.WriteLine($"\\{currentPlayer}/");
             Console.WriteLine(" |");
             Console.WriteLine("/ \\");
         }
