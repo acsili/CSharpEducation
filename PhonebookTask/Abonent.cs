@@ -11,41 +11,15 @@ namespace PhonebookTask
     /// </summary>
     internal class Abonent
     {
-        #region Fields and Properties
-
-        private string name;
-        private string phoneNumber;
-
         /// <summary>
         /// Имя абонента.
         /// </summary>
-        public string Name 
-        { 
-            get 
-            { 
-                return name; 
-            } 
-            set
-            {
-                name = value;
-            }
-        }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Номер телефона абонента.
         /// </summary>
-        public string PhoneNumber
-        {
-            get
-            {
-                return phoneNumber;
-            }
-            set
-            {
-                phoneNumber = value;
-            }
-        }
+        public string? PhoneNumber { get; set; }
 
-        #endregion
     }
 }
