@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -10,17 +9,16 @@ namespace PhonebookTask
     /// </summary>
     internal class Phonebook
     {
-        #region Constants
+        #region Константы
 
         /// <summary>
-        /// Путь к файлу phonebook.txt.
+        /// Путь к файлу с абонентами.
         /// </summary>
         private const string filename = "phonebook.txt";
 
         #endregion
 
-
-        #region Fields and Properties
+        #region Поля и свойства
 
         /// <summary>
         /// Абоненты.
@@ -32,22 +30,20 @@ namespace PhonebookTask
         /// </summary>
         private static Phonebook? instance;
 
-        #endregion
-
-
-        #region Methods
-
         /// <summary>
         /// Получение экземпляра.
         /// </summary>
         /// <returns>Объект типа Phonebook</returns>
-        public static Phonebook GetInstance
-            => instance ?? new Phonebook();
+        public static Phonebook Instance => instance ?? new Phonebook();
+
+        #endregion
+
+        #region Методы
 
         /// <summary>
-        /// Создание файла.
+        /// Создать файл.
         /// </summary>
-        private static void CreateFile()
+        private static void CreateFileIfNotExists()
         {
             if (!File.Exists(filename))
             {
@@ -56,11 +52,11 @@ namespace PhonebookTask
         }
 
         /// <summary>
-        /// Загрузка данных из файла.
+        /// Загрузить данные из файла.
         /// </summary>
         private void LoadFromFile()
         {
-            var abonentsFromFile = File.ReadAllLines(filename);
+            string[] abonentsFromFile = File.ReadAllLines(filename);
             abonentsFromFile
                 .ToList()
                 .ForEach(x => abonents.Add(new Abonent() { Name = x.Split(" - ")[0], PhoneNumber = x.Split(" - ")[1] }));
@@ -88,7 +84,7 @@ namespace PhonebookTask
         /// <summary>
         /// Удаление абонента.
         /// </summary>
-        /// <param name="phoneNumber">Номер телефона.</param>
+        /// <param name="abonent">Абонент.</param>
         public void DeleteAbonent(Abonent abonent)
         {
             abonents.Remove(abonent);
@@ -103,7 +99,6 @@ namespace PhonebookTask
         {
             return abonents;
         }
-
 
         /// <summary>
         /// Получение абонента по номеру телефона.
@@ -130,7 +125,7 @@ namespace PhonebookTask
         /// </summary>
         /// <param name="phoneNumber">Номер телефона.</param>
         /// <returns>Если ввод корректный - true, иначе false.</returns>
-        public bool IsPhoneNumber(string phoneNumber)
+        public bool CheckIsPhoneNumber(string phoneNumber)
         {
             if (phoneNumber.Length != 11)
             {
@@ -153,7 +148,7 @@ namespace PhonebookTask
         /// </summary>
         /// <param name="name">Имя абонента.</param>
         /// <returns>Если ввод корректный - true, иначе false.</returns>
-        public bool IsName(string name)
+        public bool CheckIsName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -173,14 +168,14 @@ namespace PhonebookTask
 
         #endregion
 
-        #region Constructors
+        #region Конструкторы
 
         /// <summary>
         /// Создание файла. Загрузка данных из файла.
         /// </summary>
         private Phonebook()
         {
-            CreateFile();
+            CreateFileIfNotExists();
             LoadFromFile();
         }
 

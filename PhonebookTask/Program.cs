@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-var phonebook = Phonebook.GetInstance;
+var phonebook = Phonebook.Instance;
 
 while (true)
 {
@@ -20,7 +20,7 @@ while (true)
         case "1":
             Console.Write("Введите номер телефона: ");
             var phoneNumberForAdd = Console.ReadLine();
-            if (!phonebook.IsPhoneNumber(phoneNumberForAdd))
+            if (!phonebook.CheckIsPhoneNumber(phoneNumberForAdd))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Номер должен состоять из 11 цифр.\n");
@@ -29,7 +29,7 @@ while (true)
             }
             Console.Write("Введите имя: ");
             var nameForAdd = Console.ReadLine();
-            if (!phonebook.IsName(nameForAdd))
+            if (!phonebook.CheckIsName(nameForAdd))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Имя должно состоять только из букв.\n");
@@ -55,7 +55,7 @@ while (true)
         case "2":
             Console.Write("Введите номер телефона для удаления: ");
             var phoneNumberForDelete = Console.ReadLine();
-            if (!phonebook.IsPhoneNumber(phoneNumberForDelete))
+            if (!phonebook.CheckIsPhoneNumber(phoneNumberForDelete))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Номер должен состоять из 11 цифр.\n");
@@ -81,7 +81,7 @@ while (true)
         case "3":
             Console.Write("Введите номер телефона: ");
             var numberToFind = Console.ReadLine();
-            if (!phonebook.IsPhoneNumber(numberToFind))
+            if (!phonebook.CheckIsPhoneNumber(numberToFind))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Номер должен состоять из 11 цифр.\n");
@@ -106,7 +106,7 @@ while (true)
         case "4":
             Console.Write("Введите имя: ");
             var nameToFind = Console.ReadLine();
-            if (!phonebook.IsName(nameToFind))
+            if (!phonebook.CheckIsName(nameToFind))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Имя должно состоять только из букв.\n");
