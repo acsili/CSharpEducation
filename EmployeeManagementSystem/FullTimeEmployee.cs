@@ -11,12 +11,20 @@ namespace EmployeeManagementSystem
   /// </summary>
   public class FullTimeEmployee : Employee
   {
-    public override string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public override decimal BaseSalary { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public override string Name { get; set; } = string.Empty;
+    public override decimal BaseSalary { get; set; }
 
     public override decimal CalculateSalary()
     {
-      throw new NotImplementedException();
+      return BaseSalary;
+    }
+
+    public FullTimeEmployee() { }
+
+    public FullTimeEmployee(string name, decimal baseSalary)
+    {
+      Name = name;
+      BaseSalary = baseSalary;
     }
   }
 }
