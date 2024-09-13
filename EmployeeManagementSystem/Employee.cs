@@ -11,6 +11,8 @@ namespace EmployeeManagementSystem
   /// </summary>
   public abstract class Employee
   {
+    #region Поля и свойства
+
     /// <summary>
     /// Имя.
     /// </summary>
@@ -21,9 +23,16 @@ namespace EmployeeManagementSystem
     /// </summary>
     public abstract decimal BaseSalary { get; set; }
 
+    #endregion
+
+    #region Методы
+
     /// <summary>
-    /// 
+    /// Вычислить зарплату сотрудника.
     /// </summary>
+    /// <returns>Зарплата сотрудника.</returns>
     public abstract decimal CalculateSalary();
+
+    #endregion
   }
 }
