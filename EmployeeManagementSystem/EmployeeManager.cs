@@ -26,7 +26,7 @@ namespace EmployeeManagementSystem
     /// <summary>
     /// Сотрудники.
     /// </summary>
-    private readonly Dictionary<string, Employee> employees = new();
+    private static readonly Dictionary<string, Employee> employees = new();
 
     #endregion
 
@@ -46,7 +46,7 @@ namespace EmployeeManagementSystem
     /// <summary>
     /// Загрузить данные из файла.
     /// </summary>
-    private void LoadFromFile()
+    private static void LoadFromFile()
     {
       string[] employeesFromFile = File.ReadAllLines(filename);
       employeesFromFile
@@ -62,7 +62,8 @@ namespace EmployeeManagementSystem
             });
           else
             employees.Add(employee[0], new PartTimeEmployee() 
-            { Name = employee[0], 
+            { 
+              Name = employee[0], 
               HourlyRate = decimal.Parse(employee[1]), 
               HoursWorked = int.Parse(employee[2])
             });
@@ -70,9 +71,9 @@ namespace EmployeeManagementSystem
     }
 
     /// <summary>
-    /// Сохрание данных. 
+    /// Сохранить данные. 
     /// </summary>
-    private void SaveToFile()
+    private static void SaveToFile()
     {
       var employeesArray = employees
         .Select(x =>
@@ -88,8 +89,13 @@ namespace EmployeeManagementSystem
             return $"{p.Name} {p.HourlyRate} {p.HoursWorked}";
           }
         });
+
       File.WriteAllLines(filename, employeesArray);
     }
+
+    #endregion
+
+    #region IEmployeeManager
 
     /// <summary>
     /// Добавить сотрудника.

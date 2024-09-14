@@ -23,19 +23,25 @@ namespace EmployeeManagementSystem
     /// </summary>
     public int HoursWorked { get; set; }
 
+    #endregion
+
+    #region Базовый класс
+
+    #region Поля и свойства
+
     /// <summary>
     /// Имя.
     /// </summary>
     public override string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Зарплата.
+    /// Базовая зарплата.
     /// </summary>
     public override decimal BaseSalary { get; set; }
 
     #endregion
 
-    #region Поля и свойства
+    #region Методы
 
     /// <summary>
     /// Вычислить зарплату.
@@ -48,7 +54,9 @@ namespace EmployeeManagementSystem
 
     #endregion
 
-    #region Поля и свойства
+    #endregion
+
+    #region Конструкторы
 
     /// <summary>
     /// Конструктор.
@@ -56,7 +64,7 @@ namespace EmployeeManagementSystem
     public PartTimeEmployee() { }
 
     /// <summary>
-    /// Конструктор с параметрами.
+    /// Конструктор.
     /// </summary>
     /// <param name="name">Имя.</param>
     /// <param name="hourlyRate">Почасовая ставка.</param>

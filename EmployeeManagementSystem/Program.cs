@@ -1,7 +1,6 @@
 ﻿using EmployeeManagementSystem;
 using System;
 
-Console.WriteLine("Hello, World!");
 EmployeeManager employeeManager = new EmployeeManager();
 
 while (true)

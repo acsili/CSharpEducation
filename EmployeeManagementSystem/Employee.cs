@@ -19,7 +19,7 @@ namespace EmployeeManagementSystem
     public abstract string Name { get; set; }
 
     /// <summary>
-    /// Зарплата.
+    /// Базовая зарплата.
     /// </summary>
     public abstract decimal BaseSalary { get; set; }
 

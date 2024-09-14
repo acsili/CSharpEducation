@@ -11,6 +11,8 @@ namespace EmployeeManagementSystem
   /// </summary>
   public class FullTimeEmployee : Employee
   {
+    #region Базовый класс
+
     #region Поля и свойства
 
     /// <summary>
@@ -19,7 +21,7 @@ namespace EmployeeManagementSystem
     public override string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Зарплата.
+    /// Базовая зарплата.
     /// </summary>
     public override decimal BaseSalary { get; set; }
 
@@ -38,6 +40,8 @@ namespace EmployeeManagementSystem
 
     #endregion
 
+    #endregion
+
     #region Конструкторы
 
     /// <summary>
@@ -46,7 +50,7 @@ namespace EmployeeManagementSystem
     public FullTimeEmployee() { }
 
     /// <summary>
-    /// Конструктор с параметрами. 
+    /// Конструктор. 
     /// </summary>
     /// <param name="name">Имя.</param>
     /// <param name="baseSalary">Зарплата.</param>
