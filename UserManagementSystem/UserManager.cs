@@ -55,6 +55,13 @@ namespace UserManagementSystem
     /// </summary>
     public void ListUsers()
     {
+      if (Users.Count == 0)
+      {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("Пользователей нет.");
+        Console.ResetColor();
+        return;
+      }
       Users.ForEach(x => Console.WriteLine($"Имя: {x.Name}, Email: {x.Email}"));
     }
 
