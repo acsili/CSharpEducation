@@ -28,6 +28,10 @@ namespace UserManagementSystem
     /// <param name="user"></param>
     public void AddUser(User user)
     {
+      if (Users.Exists(u => u.Id == user.Id))
+      {
+        throw new UserAlreadyExistsException($"Пользователь с идентификатором {user.Id} уже есть.");
+      }
       Users.Add(user);
     }
 
@@ -37,7 +41,8 @@ namespace UserManagementSystem
     /// <param name="id"></param>
     public void RemoveUser(int id)
     {
-      Users.RemoveAt(id);
+      var user = GetUser(id);
+      Users.Remove(user);
     }
 
     /// <summary>
@@ -47,7 +52,12 @@ namespace UserManagementSystem
     /// <returns></returns>
     public User GetUser(int id)
     {
-      return Users.FirstOrDefault(x => x.Id == id);
+      var user = Users.FirstOrDefault(x => x.Id == id);
+      if (user == null)
+      {
+        throw new UserNotFoundException($"Пользователь с идентификатором {id} не найден.");
+      }
+      return user;
     }
 
     /// <summary>
@@ -64,7 +74,7 @@ namespace UserManagementSystem
       }
       Users.ForEach(x => Console.WriteLine($"Имя: {x.Name}, Email: {x.Email}"));
     }
-
+    
     #endregion
   }
 }
