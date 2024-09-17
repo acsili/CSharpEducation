@@ -22,22 +22,41 @@ namespace UserManagementSystem
 
     #region Методы
 
+    /// <summary>
+    /// Добавить пользователя.
+    /// </summary>
+    /// <param name="user"></param>
     public void AddUser(User user)
     {
-
+      Users.Add(user);
     }
 
+    /// <summary>
+    /// Удалить пользователя.
+    /// </summary>
+    /// <param name="id"></param>
     public void RemoveUser(int id)
     {
-
+      Users.RemoveAt(id);
     }
 
+    /// <summary>
+    /// Получить пользователя.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public User GetUser(int id)
     {
       return Users.FirstOrDefault(x => x.Id == id);
     }
 
-
+    /// <summary>
+    /// Вывод пользователей на консоль.
+    /// </summary>
+    public void ListUsers()
+    {
+      Users.ForEach(x => Console.WriteLine($"Имя: {x.Name}, Email: {x.Email}"));
+    }
 
     #endregion
   }
