@@ -17,13 +17,24 @@ public class Phonebook
   #region Методы
 
   /// <summary>
+  /// Очистить список абонентов.
+  /// </summary>
+  public void ClearPhonebookList()
+  {
+    this.subscribers.Clear();
+  }
+
+  /// <summary>
   /// Получить абонента из книги.
   /// </summary>
   /// <param name="id">ИД абонента.</param>
   /// <returns>Найденный абонент в книге.</returns>
   public Subscriber GetSubscriber(Guid id)
   {
-    return this.subscribers.Single(s => s.Id == id);
+    var subscriber = this.subscribers.SingleOrDefault(s => s.Id == id);
+    if (subscriber == null)
+      throw new ArgumentNullException(nameof(subscriber));
+    return subscriber;
   }
 
   /// <summary>
@@ -42,6 +53,9 @@ public class Phonebook
   /// <exception cref="InvalidOperationException">Возникает, если абонент уже существует в книге.</exception>
   public void AddSubscriber(Subscriber subscriber)
   {
+    if (subscriber.Id == Guid.Empty)
+      throw new ArgumentNullException(nameof(subscriber.Id));
+
     if (this.subscribers.Contains(subscriber))
       throw new InvalidOperationException("Unable to add subscriber. Subscriber exists");
 
